@@ -12,12 +12,10 @@ export const getSlashCommands = async (client: Client) => {
     slashCommands.set(slashCommand.default.data.name, slashCommand);
 
     const command = new SlashCommandBuilder().setName(slashCommand.default.data.name).setDescription(slashCommand.default.data.description);
-    client.application?.commands.create(command);
+    await client.application?.commands.create(command);
 
     console.log(`loaded command: ${slashCommand.default.data.name}`);
   }
 
-  return {
-    slashCommands
-  };
+  return slashCommands;
 };

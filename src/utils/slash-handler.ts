@@ -1,12 +1,8 @@
-import { Interaction } from "discord.js";
+import { Collection, Interaction } from "discord.js";
 
-export const handleSlashCommand = async (interaction: Interaction) => {
-  if (!interaction.isChatInputCommand()) {
-    console.log("not slash");
-    return;
-  }
+export const handleSlashCommand = async (slashCommands: Collection<string, any>, interaction: Interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+  if (typeof slashCommands.get(interaction.commandName) === "undefined") return;
 
-  if (interaction.commandName === "ping") {
-    await interaction.reply("Pong!");
-  }
+  slashCommands.get(interaction.commandName)?.default.execute(interaction);
 };
