@@ -1,6 +1,6 @@
 import { Interaction } from "discord.js";
 
-export const handleSlashCommands = async (interaction: Interaction) => {
+export const handleSlashCommand = async (interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) {
     console.log("not slash");
     return;

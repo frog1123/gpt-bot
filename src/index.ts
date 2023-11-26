@@ -1,7 +1,7 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
 import { clientReady } from "./utils/client-ready";
-import { handleSlashCommands } from "./utils/slash-handler";
+import { handleSlashCommand } from "./utils/slash-handler";
 
 (async () => {
   const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
@@ -11,7 +11,7 @@ import { handleSlashCommands } from "./utils/slash-handler";
   });
 
   client.on(Events.InteractionCreate, async interaction => {
-    handleSlashCommands(interaction);
+    handleSlashCommand(interaction);
   });
 
   client.login(process.env.BOT_TOKEN);
