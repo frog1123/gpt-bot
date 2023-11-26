@@ -11,7 +11,14 @@ export const getSlashCommands = async (client: Client) => {
     const slashCommand = await import(`../slash-commands/${file}`);
     slashCommands.set(slashCommand.default.data.name, slashCommand);
 
+    // console.log(slashCommand.default.data);
+
     const command = new SlashCommandBuilder().setName(slashCommand.default.data.name).setDescription(slashCommand.default.data.description);
+
+    for (let i = 0; i < slashCommand.default.data.options.length; i++) {
+      command.addStringOption(slashCommand.default.data.options[i]);
+    }
+
     await client.application?.commands.create(command);
 
     console.log(`loaded command: ${slashCommand.default.data.name}`);

@@ -4,5 +4,7 @@ export const handleSlashCommand = async (slashCommands: Collection<string, any>,
   if (!interaction.isChatInputCommand()) return;
   if (typeof slashCommands.get(interaction.commandName) === "undefined") return;
 
+  console.log(interaction.options);
+
   slashCommands.get(interaction.commandName)?.default.execute(interaction);
 };
