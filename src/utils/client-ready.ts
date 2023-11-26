@@ -15,15 +15,19 @@ export const clientReady = async (client: Client) => {
   const slashCommands = new Collection() as Collection<string, any>;
   const slashCommandFiles = readdirSync(join(__dirname, "src", "..", "src", "slash-commands")).filter(file => file.endsWith(".ts"));
   for (const file of slashCommandFiles) {
-    // const slashCommand = await import(`./slash-commands/${file}`);
-    // slashCommands.set(slashCommand.default.data.name, slashCommand);
-    // console.log("loaded command: ", slashCommand);
+    const slashCommand = await import(`../slash-commands/${file}`);
+    slashCommands.set(slashCommand.default.data.name, slashCommand);
 
-    console.log(file);
+    const command = new SlashCommandBuilder().setName(slashCommand.default.data.name).setDescription(slashCommand.default.data.description);
+    client.application?.commands.create(command);
+
+    console.log(`loaded command: ${slashCommand.default.data.name}`);
   }
 
-  console.log(readdirSync(join(__dirname, "src", "..", "src", "slash-commands")));
+  // const ping = new SlashCommandBuilder().setName("ping").setDescription("test command");
+  // client.application?.commands.create(ping);
 
-  const ping = new SlashCommandBuilder().setName("ping").setDescription("test command");
-  client.application?.commands.create(ping);
+  return {
+    slashCommands
+  };
 };
