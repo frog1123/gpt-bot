@@ -20,15 +20,14 @@ export default {
         return;
       }
 
+      const reply = await interaction.reply("thinking...");
+
       const chatCompletion = await openai.chat.completions.create({
         messages: [{ role: "user", content: message }],
         model: "gpt-3.5-turbo"
       });
 
-      console.log(chatCompletion.choices);
-
-      const replyContent = chatCompletion.choices[0]?.message?.content;
-      await interaction.reply(replyContent);
+      await reply.edit(chatCompletion.choices[0]?.message?.content);
     } catch (err) {
       console.error("[CHAT]", err);
       interaction.reply("Something went wrong :/");
