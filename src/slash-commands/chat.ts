@@ -25,8 +25,6 @@ export default {
       model: "gpt-3.5-turbo"
     });
 
-    console.log(chatCompletion.choices);
-
-    await interaction.reply(chatCompletion.choices[0].message);
+    await interaction.reply(chatCompletion.choices[0].message.content);
   }
 };
